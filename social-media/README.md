@@ -3,10 +3,13 @@
 Amazon Machine Learning can help your company make better use of social
 media.  This example application will automatically analyze Twitter content
 to identify customer support issues.  This application will continuously
-monitor all tweets that mention your company's twitter handle, and predict
+monitor all tweets that mention your company's Twitter handle, and predict
 whether or not your company's customer support team should reach out to the
 poster.  By using a machine learning (ML) model as your first tier of
-support you can lower support costs and increase customer satisfaction.
+support you can lower support costs and increase customer satisfaction. The
+same application integrates Amazon Machine Learning with Amazon Mechanical
+Turk, Amazon Kinesis, AWS Lambda, and Amazon Simple Notification Service
+(Amazon SNS).
 
 The example walks through the following steps:
 
@@ -72,11 +75,11 @@ To gather the training data, run the `gather-data.sh` command as follows:
 
     python gather-data.py @awscloud 
 
-Substituting your company's twitter handle instead of `@awscloud`.
+Substituting your company's Twitter handle instead of `@awscloud`.
 This will write the tweets to a file called `line_separated_tweets_json.txt`.
 
 Also, you need to create a file called `twitter.credentials.json` with your 
-own twitter API keys.  See
+own Twitter API keys.  See
 [https://dev.twitter.com/oauth/overview/application-owner-access-tokens](https://dev.twitter.com/oauth/overview/application-owner-access-tokens)
 for how to set these values up.
 
@@ -97,7 +100,7 @@ walk through that process.
 
 ### Step 2a: Prepare tweets for labelling with MTurk
 
-The first step is to take the raw JSON data that we have received from the twitter API and
+The first step is to take the raw JSON data that we have received from the Twitter API and
 convert it to a CSV format that Mechanical Turk can use.  Do this by running:
 
     python build-mturk-csv.py
@@ -255,7 +258,7 @@ from previous steps that contains line separated tweets json data, we reuse it f
 ### Step 5c: Pushing tweets into Kinesis using Streaming Api
 
 This sample doesn't currently include a production-level system to push tweets into Kinesis.
-However, you can work with [GNIP](http://www.gnip.com) to connect the twitter API to Kinesis.  
+However, you can work with [GNIP](http://www.gnip.com) to connect the Twitter API to Kinesis.  
 Refer to their [blog post](http://support.gnip.com/code/gnip-kinesis-ami.html)
 on the subject, or their 
 [open source code on github](https://github.com/gnip/sample-kinesis-connector).
