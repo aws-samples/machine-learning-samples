@@ -2,12 +2,11 @@
 
 ## How to use
 
-Here are code snippets (not full applications) showing
-how to use Amazon Machine Learning to get real-time
-predictions from iOS.
+Here is a small sample showing how to use Amazon Machine Learning to get
+real-time predictions from iOS.  
 
-These code-snippets mimic the sample code in the main 
-developer documentation.
+Be sure to substitute your own AWS credentials in `AppDelegate.m`,
+and your own ML Model Id in `ViewController.m`.
 
 ## Example applications
 

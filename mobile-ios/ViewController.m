@@ -1,3 +1,7 @@
+//
+//  ViewController.m
+//  ObjectiveCSample
+//
 // Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // 
 // Licensed under the Amazon Software License (the "License").
@@ -10,19 +14,37 @@
 // on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express
 // or implied. See the License for the specific language governing permissions
 // and limitations under the License.
+//
+
+#import "ViewController.h"
+
+#import "AWSMachineLearning.h"
+
+@interface ViewController ()
+
+@end
+
+// Cache real-time endpoint
+NSString *endpoint;
+
+// Amazon Machine Learning Client
+AWSMachineLearning *machineLearning;
+
+@implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    AWSMachineLearning *MachineLearning = [AWSMachineLearning defaultMachineLearning];
+    machineLearning = [AWSMachineLearning defaultMachineLearning];
     
-    NSString *MLModelId = @"ml-DONRnkB55jJ";
+    // Specify your ML Model
+    NSString *MLModelId = @"YOUR-ML-MODEL-ID";
     
     AWSMachineLearningGetMLModelInput *getMLModelInput = [AWSMachineLearningGetMLModelInput new];
     getMLModelInput.MLModelId = MLModelId;
     
-    
-    [[[MachineLearning getMLModel:getMLModelInput] continueWithSuccessBlock:^id(BFTask *task) {
+    // Call Get ML Model
+    [[[machineLearning getMLModel:getMLModelInput] continueWithSuccessBlock:^id(BFTask *task) {
         AWSMachineLearningGetMLModelOutput *getMLModelOutput = task.result;
         
         if (getMLModelOutput.status != AWSMachineLearningEntityStatusCompleted) {
@@ -30,16 +52,14 @@
             return nil;
         }
         if (getMLModelOutput.endpointInfo.endpointStatus != AWSMachineLearningRealtimeEndpointStatusReady) {
-            NSLog(@"Realtime endpoint is not ready");
+            NSLog(@"Real-time endpoint is not ready");
             return nil;
         }
+        endpoint = getMLModelOutput.endpointInfo.endpointUrl;
         
-        AWSMachineLearningPredictInput *predictInput = [AWSMachineLearningPredictInput new];
-        predictInput.predictEndpoint = getMLModelOutput.endpointInfo.endpointUrl;
-        predictInput.MLModelId = MLModelId;
-        predictInput.record = @{};
-        
-        return [MachineLearning predict:predictInput];
+        // Since model is complete and real-time endpoint is ready, call predict
+        return [self predict:MLModelId withRecord: @{}];
+
     }] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             NSLog(@"Error %@", task.error);
@@ -54,3 +74,19 @@
         return nil;
     }];
 }
+
+- (BFTask *) predict:(NSString *)mlModelId withRecord:(NSDictionary *)record {
+    AWSMachineLearningPredictInput *predictInput = [AWSMachineLearningPredictInput new];
+    predictInput.predictEndpoint = endpoint;
+    predictInput.MLModelId = mlModelId;
+    predictInput.record = record;
+    return [machineLearning predict:predictInput];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
