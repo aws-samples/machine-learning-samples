@@ -161,7 +161,7 @@ to convert the 3 HIT responses for each tweet into a single dataset with a binar
 Once you have your labelled training data in CSV format, creating the ML model requires a few
 API calls, which are automated in this script:
 
-    python create-aml-model.py labeled.csv aml_training_dataset.csv aml_training_dataset.schema s3-bucket-name s3-key-name
+    python create-aml-model.py labeled.csv aml_training_dataset.csv aml_training_dataset.csv.schema s3-bucket-name s3-key-name
 
 This utility creates a machine learning model that performs binary classification.
 Requires input dataset and corresponding scheme specified through file names in
