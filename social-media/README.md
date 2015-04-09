@@ -253,7 +253,7 @@ from previous steps that contains line separated tweets json data, we reuse it f
 ### Step 5c: Pushing tweets into Kinesis using Streaming Api
 
 This sample doesn't currently include a production-level system to push tweets into Kinesis.
-However, you can work with [http://www.gnip.com](GNIP) to connect the twitter API to Kinesis.  
+However, you can work with [GNIP](http://www.gnip.com) to connect the twitter API to Kinesis.  
 Refer to their [blog post](http://support.gnip.com/code/gnip-kinesis-ami.html)
 on the subject, or their 
 [open source code on github](https://github.com/gnip/sample-kinesis-connector).
