@@ -1,12 +1,12 @@
 # Social Media Filtering with Amazon Machine Learning
 
-Amazon Machine Learning can help your company make better use of social media.  This
-example application will automatically analyze Twitter content to identify
-customer support issues.  This application will continuously monitor all tweets
-that mention your company's twitter handle, and predict whether or not 
-your company's customer support team should reach out to the poster.  
-By using a machine learning (ML) model as your first tier of support you can
-lower support costs and increase customer satisfaction.
+Amazon Machine Learning can help your company make better use of social
+media.  This example application will automatically analyze Twitter content
+to identify customer support issues.  This application will continuously
+monitor all tweets that mention your company's twitter handle, and predict
+whether or not your company's customer support team should reach out to the
+poster.  By using a machine learning (ML) model as your first tier of
+support you can lower support costs and increase customer satisfaction.
 
 The example walks through the following steps:
 
@@ -18,16 +18,18 @@ The example walks through the following steps:
 
 ## Skipping ahead
 
-That this repository includes examples of the output of the first two
-steps (gathering and labeling training data), so if you're anxious to get 
-going, you can jump ahead to step 3.  Just rename `sample-unlabeled.csv`
-to `unlabeled.csv` and rename `sample-labeled.csv` to `labeled.csv` to use our
-data and see the model work.
+That this repository includes examples of the output of the first two steps
+(gathering and labeling training data), so if you're anxious to get going,
+and see ML working, you can jump ahead to step 3.  Just download a sample
+of labelled training data from the `@awscloud` account which is on S3 at
+`s3://aml-sample-data/social-media/aml_training_dataset.csv`.  Copy that
+file to your local directory named `aml_training_dataset.csv`, which is the
+final output of step 2.
 
-You could even try using a model trained on our example data for your own
-application, but we don't recommend it.  In ML, the quality of data is the most
-important thing.  So if you use somebody else's data to analyze your customers, it's
-probably not going to work very well.
+You might be tempted to try using a model trained on our example data for
+your own application, but we don't recommend it.  In ML, the quality of
+data is the most important thing.  So if you use somebody else's data to
+analyze your customers, it's probably not going to work very well.
 
 ## Step 0: Setting up your environment
 
