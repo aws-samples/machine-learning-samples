@@ -1,0 +1,22 @@
+{{
+    "Statement": [
+        {{
+            "Action": [
+                "kinesis:ReadStream",
+                "kinesis:GetRecords",
+                "kinesis:GetShardIterator",
+                "kinesis:DescribeStream",
+                "kinesis:ListStreams"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:kinesis:{region}:{awsAccountId}:stream/{kinesisStream}"
+        }},
+        {{
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:lambda:{region}:{awsAccountId}:function:{lambdaFunctionName}"
+        }}
+    ]
+}}

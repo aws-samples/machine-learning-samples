@@ -1,0 +1,14 @@
+{{
+    "Statement": [
+        {{
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Principal": {{
+                "Service": "machinelearning.amazonaws.com"
+            }},
+            "Resource": [
+                "arn:aws:s3:::{bucketName}/{keyName}"
+            ]
+        }}
+    ]
+}}

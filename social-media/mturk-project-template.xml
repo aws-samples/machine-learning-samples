@@ -1,0 +1,133 @@
+<!-- Bootstrap v3.0.3 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css"
+rel="stylesheet" />
+<section class="container" id="Other"
+style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+
+  <div class="row col-xs-12 col-md-12">
+    <!-- Instructions -->
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <strong>Instructions</strong>
+      </div>
+      <div class="panel-body">
+        <p>The goal of this HIT is to catagorize tweets into one of
+        5 catagories - the author of the tweet...</p>
+        <p class="small-text text-info">1) wants something; 2) is
+        asking a question; 3) is reporting a problem; 4) is angry
+        or unhappy; 5) None of the above.</p>
+        <p>Here are example tweets of each catagory:</p>
+        <table class="table table-condensed small-text">
+          <tbody>
+            <tr>
+              <th>The author of the tweet...</th>
+              <th>Examples of tweet that belongs in this
+              category</th>
+            </tr>
+            <tr>
+              <td>... wants something:</td>
+              <td>
+                <ol>
+                  <li>dear @awscloud it would be really great to
+                  have custom tabs on the aws console with searches
+                  on. I have too many instances already :)</li>
+                  <li>@awscloud It would be cool if we received an
+                  alert that we are nearing a service limit before
+                  we actually hit it.</li>
+                  <li>Hey Amazonians, give @spartanbride a follow
+                  #aws @awscloud</li>
+                  <li>@awscloud Please send me an AWS t-shirt.</li>
+                </ol>
+              </td>
+            </tr>
+            <tr>
+              <td>... is asking a question:</td>
+              <td>
+                <ol>
+                  <li>@awscloud Hello. Do you have a dedicated
+                  Account Manager handle individual accounts?</li>
+                  <li>Seriously though, @awscloud - how is the
+                  request rate limit determined? How do I get it
+                  boosted?</li>
+                  <li>@jeremeamia Thanks for the quick response. So
+                  when do honorary members of the @awscloud team
+                  get AWS t-shirts? :) /cc @jeffbarr</li>
+                </ol>
+              </td>
+            </tr>
+            <tr>
+              <td>... is reporting a problem:</td>
+              <td>
+                <ol>
+                  <li>@awsforphp I believe the latest PHP SDK
+                  (v2.6.16) is broken again. More details coming.
+                  @jeffbarr @awscloud @jeremeamia</li>
+                  <li>@awsforphp @jeffbarr @awscloud @jeremeamia
+                  PHP SDK v2.6.15 works fine. Error happens on
+                  @AWSOpsWorks PHP v5.3.29 with PHP SDK 2.6.16</li>
+                </ol>
+              </td>
+            </tr>
+            <tr>
+              <td>... is angry or unhappy:</td>
+              <td>
+                <ol>
+                  <li>It's insulting that @awscloud marked an EBS
+                  volume limit increase support request as low
+                  severity but I can't do anything while I
+                  wait.</li>
+                  <li>All I have ever heard about @awscloud Amazon
+                  customer service is rave reviews, but I'm sure
+                  having a hell of a time with \"Santhosh.\"
+                  #pissed</li>
+                </ol>
+              </td>
+            </tr>
+            <tr>
+              <td>None of the above:</td>
+              <td>
+                <ol>
+                  <li>Tweets that don't belong to any of the above
+                  categories; should land in here.</li>
+                </ol>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <em>The underlying purpose of this HIT is to identify the
+        tweets which need attention from a customer service
+        representative who can address the concerns of the author
+        of the tweet.</em>
+      </div>
+    </div>
+    <!-- End Instructions -->
+    <!-- Content Body -->
+    <section>What category would the following tweet belong in: 
+    <fieldset>
+      <label>${tweet}</label>
+      <div class="checkbox">
+        <label>
+        <input name="Q3Answer" type="checkbox"
+        value="Request" />Wants something</label>
+        <br />
+        <label>
+        <input name="Q3Answer" type="checkbox"
+        value="Question" />Asking a question</label>
+        <br />
+        <label>
+        <input name="Q3Answer" type="checkbox"
+        value="Problem Report" />Reporting a problem</label>
+        <br />
+        <label>
+        <input name="Q3Answer" type="checkbox"
+        value="Angry" />Angry or Unhappy</label>
+        <br />
+        <label>
+        <input name="Q3Answer" type="checkbox" value="N/A" />None
+        of the above</label>
+      </div>
+    </fieldset></section>
+  </div>
+</section>
+<style type="text/css">.small-text { font-size: 0.85em; }
+.emphasis{ color:red; }</style>

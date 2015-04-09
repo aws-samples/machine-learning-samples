@@ -1,0 +1,26 @@
+{{
+    "Statement": [
+        {{
+            "Action": [
+                "logs:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:{region}:{awsAccountId}:log-group:/aws/lambda/{lambdaFunctionName}:*"
+        }},
+        {{
+            "Action": [
+                "sns:publish"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:sns:{region}:{awsAccountId}:{snsTopic}"
+        }},
+        {{
+            "Action": [
+                "machinelearning:GetMLModel",
+                "machinelearning:Predict"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:machinelearning:{region}:{awsAccountId}:mlmodel/{mlModelId}"
+        }}
+    ]
+}}

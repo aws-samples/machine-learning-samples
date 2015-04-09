@@ -1,0 +1,191 @@
+{
+    "attributes": [
+        {
+            "attributeName": "created_at_in_seconds",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "description",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "favorite_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "favorited",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "favourites_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "followers_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "friends_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "geo_enabled",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "in_reply_to_screen_name",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "in_reply_to_status_id",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "in_reply_to_user_id",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "location",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "r.created_at_in_seconds",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.description",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "r.favorite_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.favorited",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "r.favourites_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.followers_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.friends_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.geo_enabled",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "r.in_reply_to_screen_name",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "r.in_reply_to_status_id",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.in_reply_to_user_id",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.location",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "r.retweet_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.screen_name",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "r.sid",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.statuses_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.text",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "r.time_zone",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "r.uid",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.user.name",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "r.utc_offset",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "r.verified",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "retweet_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "screen_name",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "sid",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "statuses_count",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "text",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "time_zone",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "uid",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "user.name",
+            "attributeType": "TEXT"
+        },
+        {
+            "attributeName": "utc_offset",
+            "attributeType": "NUMERIC"
+        },
+        {
+            "attributeName": "verified",
+            "attributeType": "CATEGORICAL"
+        },
+        {
+            "attributeName": "trainingLabel",
+            "attributeType": "BINARY"
+        }
+    ],
+    "dataFileContainsHeader": true,
+    "dataFormat": "CSV",
+    "excludedAttributeNames": [],
+    "rowId": "sid",
+    "rowWeight": null,
+    "targetAttributeName": "trainingLabel",
+    "version": "1.0"
+}
