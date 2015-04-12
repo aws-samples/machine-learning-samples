@@ -2,4 +2,3 @@
 *.swp
 .DS_Store
 *.class
-target/
