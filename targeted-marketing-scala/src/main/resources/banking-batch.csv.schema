@@ -1,0 +1,89 @@
+{
+  "excludedAttributeNames": [], 
+  "version": "1.0", 
+  "dataFormat": "CSV", 
+  "rowId": null, 
+  "dataFileContainsHeader": true, 
+  "attributes": [
+    {
+      "attributeName": "age", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "job", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "marital", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "education", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "default", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "housing", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "loan", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "contact", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "month", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "day_of_week", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "duration", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "campaign", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "pdays", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "previous", 
+      "attributeType": "BINARY"
+    }, 
+    {
+      "attributeName": "poutcome", 
+      "attributeType": "CATEGORICAL"
+    }, 
+    {
+      "attributeName": "emp_var_rate", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "cons_price_idx", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "cons_conf_idx", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "euribor3m", 
+      "attributeType": "NUMERIC"
+    }, 
+    {
+      "attributeName": "nr_employed", 
+      "attributeType": "NUMERIC"
+    }
+  ]
+}
