@@ -11,6 +11,7 @@ targeted marketing application.  This follows the "banking" dataset example
 described in the Developer Guide.  There are two versions available:
 
 * [Targeted Marketing with Machine Learning in Java](targeted-marketing-java/)
+* [Targeted Marketing with Machine Learning in Scala](targeted-marketing-scala/)
 * [Targeted Marketing with Machine Learning in Python](targeted-marketing-python/)
 
 
