@@ -35,8 +35,8 @@ ml = boto.connect_machinelearning()
 with open('create-lambda-function.config') as config:
     config = json.load(config)
 
-lambda_execution_policy = read_file_as_string_then_format('lambdaExecutionPolicyTemplate.json', **config)
-lambda_invocation_policy = read_file_as_string_then_format('lambdaInvocationPolicyTemplate.json', **config)
+lambda_execution_policy = read_file_as_string_then_format('lambdaExecutionPolicyTemplate.json', config)
+lambda_invocation_policy = read_file_as_string_then_format('lambdaInvocationPolicyTemplate.json', config)
 
 aws_account_id = config["awsAccountId"]
 
