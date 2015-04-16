@@ -1,4 +1,4 @@
-# Targeted Marketing with ML
+# Targeted Marketing with Java
 
 This example shows how to identify potential customers for targeted
 marketing campaigns, using a publicly available banking and marketing
