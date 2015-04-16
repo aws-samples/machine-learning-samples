@@ -25,6 +25,7 @@ Multi-word text attributes can be specified like:
 import boto
 import json
 import sys
+import time
 
 
 def parse_args_to_dict(argv):
@@ -57,8 +58,11 @@ def realtime_predict(ml_model_id, record):
     if endpoint:
         print('ml.predict("%s", %s, "%s") # returns...' % (ml_model_id,
                                                            json.dumps(record, indent=2), endpoint))
+        start = time.time()
         prediction = ml.predict(ml_model_id, record, predict_endpoint=endpoint)
+        latency_ms = (time.time() - start)*1000
         print(json.dumps(prediction, indent=2))
+        print("Latency: %.2fms" % latency_ms)
     else:
         print(
             '# Missing realtime endpoint\nml.create_realtime_endpoint("%s")' % ml_model_id)
