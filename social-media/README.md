@@ -25,8 +25,9 @@ That this repository includes examples of the output of the first two steps
 (gathering and labeling training data), so if you're anxious to get going,
 and see ML working, you can jump ahead to step 3.  Just download a sample
 of labelled training data from the `@awscloud` account which is on S3 at
-`s3://aml-sample-data/social-media/aml_training_dataset.csv`.  Copy that
-file to your local directory named `aml_training_dataset.csv`, which is the
+[`https://aml-sample-data.s3.amazonaws.com/social-media/aml_training_dataset.csv`](https://aml-sample-data.s3.amazonaws.com/social-media/aml_training_dataset.csv)
+(Its S3 URL is `s3://aml-sample-data/social-media/aml_training_dataset.csv`.)
+Copy that file to your local directory named `aml_training_dataset.csv`, which is the
 final output of step 2.
 
 You might be tempted to try using a model trained on our example data for
