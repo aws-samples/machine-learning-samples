@@ -8,7 +8,7 @@ each sample.
 
 These samples show how to use the Amazon Machine Learning API for a 
 targeted marketing application.  This follows the "banking" dataset example
-described in the Developer Guide.  There are two versions available:
+described in the Developer Guide.  There are three versions available:
 
 * [Targeted Marketing with Machine Learning in Java](targeted-marketing-java/)
 * [Targeted Marketing with Machine Learning in Python](targeted-marketing-python/)
