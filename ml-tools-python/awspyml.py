@@ -287,8 +287,8 @@ class SchemaGuesser(object):
             if header_line:
                 self.schema.set_variable_name(idx, name)
             else:
-                self.schema.set_variable_name(
-                    "Var%0" + digits + "d" % (idx + 1))
+                name = "Var{number:0{width}d}".format(width=digits, number = idx + 1)
+                self.schema.set_variable_name(idx, name)
 
     def _guess_if_header_line_present(self):
         header_row = self.data[0]
