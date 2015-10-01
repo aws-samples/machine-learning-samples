@@ -14,7 +14,7 @@ Turk, Amazon Kinesis, AWS Lambda, and Amazon Simple Notification Service
 The example walks through the following steps:
 
 1. [Gather training data](#step1)
-2. [Label training data with Mechanical Turk](#step2)
+2. [Label training data with Amazon Mechanical Turk](#step2)
 3. [Create the ML Model](#step3)
 4. [Configure the model](#step4)
 5. [Set up continuous monitoring](#step5)
@@ -50,7 +50,12 @@ Once those are installed, execute
 The script uses `npm` and python's `virtualenv` to setup the required dependencies
 and environment variables in the current shell.
 
-Following scripts depend on python boto library. See [instructions](http://boto.readthedocs.org/en/latest/boto_config_tut.html) on how setup credentials for boto in ~/.aws/credentials. See [instructions](http://blogs.aws.amazon.com/security/post/Tx1R9KDN9ISZ0HF/Where-s-my-secret-access-key) on how to get AWS credentials. The AWS user that you choose, needs access to a subset of the following policy to run the scripts:
+The following scripts depend on the python boto library. See
+[instructions](http://boto.readthedocs.org/en/latest/boto_config_tut.html)
+on how setup credentials for boto in ~/.aws/credentials. See
+[instructions](http://blogs.aws.amazon.com/security/post/Tx1R9KDN9ISZ0HF/Where-s-my-secret-access-key)
+on how to get AWS credentials. The AWS user that you choose, needs
+access to a subset of the following policy to run the scripts:
 
     {
         "Statement": [
@@ -61,6 +66,7 @@ Following scripts depend on python boto library. See [instructions](http://boto.
                     "machinelearning:*",
                     "kinesis:*",
                     "lambda:*",
+                    "s3:*",
                     "sns:*"
                 ],
                 "Resource": [
@@ -72,18 +78,17 @@ Following scripts depend on python boto library. See [instructions](http://boto.
 
 ## <a name="step1"></a> Step 1: Gathering training data
 
-To gather the training data, run the `gather-data.sh` command as follows:
+To gather the training data, run the following command:
 
-    python gather-data.py @awscloud 
+    python gather-data.py @awscloud
 
-Substituting your company's Twitter handle instead of `@awscloud`.
-This will write the tweets to a file called `line_separated_tweets_json.txt`.
+Substitute your company's twitter handle instead of @awscloud and
+configure your Twitter API credentials in config.py. Learn how to
+obtain your credentials
+[https://dev.twitter.com/oauth/overview/application-owner-access-tokens](here).
 
-Also, you need to create a file called `twitter.credentials.json` with your 
-own Twitter API keys.  See
-[https://dev.twitter.com/oauth/overview/application-owner-access-tokens](https://dev.twitter.com/oauth/overview/application-owner-access-tokens)
-for how to set these values up.
-
+This will produce a file called `line_separated_tweets_json.txt` that
+other scripts will read later.
 
 ## <a name="step2"></a> Step 2: Label training data with Mechanical Turk
 
@@ -107,12 +112,12 @@ convert it to a CSV format that Mechanical Turk can use.  Do this by running:
     python build-mturk-csv.py
 
 This will consume the `line_separated_tweets_json.txt` file and output a file called
-`mturk_unlabeled_dataset.csv`.  
+`mturk_unlabeled_dataset.csv`.
 
 ### Step 2b: Submit the job to MTurk
 
 Use the [Mechanical Turk Console](https://www.mturk.com/mturk/welcome) to create a set
-of Human Intelligence Tasks (HITs) to assign labels to these tweets.  Turkers will be 
+of Human Intelligence Tasks (HITs) to assign labels to these tweets.  Turkers will be
 asked to pick which label best applies to the tweet amongst:
 
 * Request
@@ -153,8 +158,8 @@ between three different human opinions on the tweet.
 
 ### Step 2c: Processing the output from MTurk
 
-Once all of your Turk HITs are complete, [download the results](https://requester.mturk.com/batches) into a file 
-called `mturk_labeled_dataset.csv`.  Then run the script 
+Once all of your Turk HITs are complete, [download the results](https://requester.mturk.com/batches) into a file
+called `mturk_labeled_dataset.csv`.  Then run the script
 
     python build-aml-training-dataset.py
 
@@ -165,7 +170,7 @@ to convert the 3 HIT responses for each tweet into a single dataset with a binar
 Once you have your labelled training data in CSV format, creating the ML model requires a few
 API calls, which are automated in this script:
 
-    python create-aml-model.py labeled.csv aml_training_dataset.csv aml_training_dataset.csv.schema s3-bucket-name s3-key-name
+    python create-aml-model.py aml_training_dataset.csv aml_training_dataset.csv.schema s3-bucket-name s3-key-name
 
 This utility creates a machine learning model that performs binary classification.
 Requires input dataset and corresponding scheme specified through file names in
@@ -220,15 +225,11 @@ appropriate values. Description of the configuration required in
   constraints.
 * *lambdaFunctionName* : The name being given to the Lambda function. See
   [docs](http://docs.aws.amazon.com/lambda/latest/dg/API_UploadFunction.html) for constraints.
-* *lambdaExecutionPolicyName* : The name being given to the execution policy
+* *lambdaExecutionRole* : The name being given to the execution role
   used by the lambda function. See
   [docs](http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html#lambda-intro-execution-role)
-  for details. See [docs](http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
-  for constraints.
-* *lambdaInvocationPolicyName* : The name being given to the invocation policy
-  used by the lambda function. See
-  [docs](http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html#lambda-intro-invocation-role)
-  for details. See [docs](http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
+  for details. See
+  [docs](http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html)
   for constraints.
 * *mlModelId* : The name of the machine learning model id which is used to
   perform predictions on the tweets. This is the id of the model that is
@@ -247,7 +248,7 @@ tweets data. Use the following script to test that the setup works.
 
     python push-json-to-kinesis.py line_separated_json.txt kinesisStreamName interval
 
-Following parameters are needed to run this script
+The following parameters are needed to run this script
 
 * *line_separated_json.txt* : File that contains line separated json data.
 * *kinesisStreamName*       : Name of the stream to which the data is pushed to.
@@ -256,10 +257,30 @@ Following parameters are needed to run this script
 This script merely pushes json data to the given Kinesis stream. As at this step, we have the file
 from previous steps that contains line separated tweets json data, we reuse it for testing.
 
-### Step 5c: Pushing tweets into Kinesis using Streaming Api
+### Step 5c: Pushing tweets into Kinesis using Twitter's Streaming APIs
 
-This sample doesn't currently include a production-level system to push tweets into Kinesis.
-However, you can work with [GNIP](http://www.gnip.com) to connect the Twitter API to Kinesis.  
-Refer to their [blog post](http://support.gnip.com/code/gnip-kinesis-ami.html)
-on the subject, or their 
+This project includes a sample app to push into Kinesis tweets that
+match a simple filter using Twitter's
+[public stream API](https://dev.twitter.com/streaming/public). For a
+production system, you can work with [GNIP](http://www.gnip.com) to
+consume streams. Refer to their
+[blog post](http://support.gnip.com/code/gnip-kinesis-ami.html) on the
+subject, or their
 [open source code on github](https://github.com/gnip/sample-kinesis-connector).
+
+You'll need a twitter library that supports streaming:
+
+    pip install twitter
+
+Modify `config.py` to add a kinesis partition name, the twitter text
+filter you'd like to search for, and your twitter credentials if you
+haven't already done so. Then simply call the sample scanner.
+
+    python scanner.py
+
+Tweets that match your filter will be processed in real time and
+pushed to the kinesis stream. The lambda function will use the ML
+model to classify these tweets and publish a notification to the
+configured SNS topic with a link to any tweet that is considered
+actionable. The easiest way to get these notifications is to
+[subscribe your email address to the SNS topic](http://docs.aws.amazon.com/sns/latest/dg/SubscribeTopic.html).

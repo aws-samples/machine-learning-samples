@@ -17,7 +17,7 @@ Sample usage:
 
 This consumes the file line_separated_tweets_json.txt which is produced by
 gather-data.py and produces mturk_unlabeled_dataset.csv which can be used to
-generate labels using Mechanical Turk Service.
+generate labels using Amazon Mechanical Turk.
 """
 
 import codecs

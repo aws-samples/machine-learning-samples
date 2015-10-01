@@ -21,6 +21,17 @@
             ],
             "Effect": "Allow",
             "Resource": "arn:aws:machinelearning:{region}:{awsAccountId}:mlmodel/{mlModelId}"
+        }},
+        {{
+            "Action": [
+                "kinesis:ReadStream",
+                "kinesis:GetRecords",
+                "kinesis:GetShardIterator",
+                "kinesis:DescribeStream",
+                "kinesis:ListStreams"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:kinesis:{region}:{awsAccountId}:stream/{kinesisStream}"
         }}
     ]
 }}

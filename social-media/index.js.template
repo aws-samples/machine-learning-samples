@@ -19,7 +19,7 @@ exports.handler = function(event, context) {{
     params['TopicArn'] = snsTopicArn;
     params['Subject']  = snsMessageSubject;
     params['Message']  = snsMessagePrefix+tweetData['sid'];
-    console.log('calling SNS to publish.');
+    console.log('Calling Amazon SNS to publish.');
     sns.publish(
       params,
       function(err, data) {{
@@ -63,7 +63,7 @@ exports.handler = function(event, context) {{
   var processRecords = function(){{
     for(i = 0; i < numMessagesToBeProcessed; ++i) {{
       encodedPayload = event.Records[i].kinesis.data;
-      // Kinesis data is base64 encoded so decode here
+      // Amazon Kinesis data is base64 encoded so decode here
       payload = new Buffer(encodedPayload, 'base64').toString('utf-8');
       console.log("payload:"+payload);
       try {{
@@ -77,7 +77,7 @@ exports.handler = function(event, context) {{
     }}
   }}
 
-  var updateRealtimeEndpoint = function(err, data){{
+  var checkRealtimeEndpoint = function(err, data){{
     if (err){{
       console.log(err);
       context.done(null, 'Failed to fetch endpoint status and url.');
@@ -96,5 +96,5 @@ exports.handler = function(event, context) {{
     }}
   }}
 
-  ml.getMLModel({{MLModelId:mlModelId}}, updateRealtimeEndpoint);
+  ml.getMLModel({{MLModelId:mlModelId}}, checkRealtimeEndpoint);
 }};

@@ -12,13 +12,13 @@
 # or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 """
-Sample usage:
+Example usage:
     python gather-data.py @awscloud
 
-Substitute your company's twitter handle instead of @awscloud. Prefill
-twitter.credentials.json file with your own twitter API key (see
-https://dev.twitter.com/oauth/overview/application-owner-access-tokens on how to
-get them)
+Substitute your company's twitter handle instead of @awscloud and
+configure your Twitter API credentials in config.py (see
+https://dev.twitter.com/oauth/overview/application-owner-access-tokens for information on
+on how to get them)
 
 This will produce a file called line_separated_tweets_json.txt. It is used by
 later scripts.
@@ -28,16 +28,17 @@ import codecs
 import json
 import os.path
 import sys
-import twitter
-
 from time import sleep
 
+import twitter
 from twitter.error import TwitterError
+
+import config
 
 twitter_api = None
 output_file_name = 'line_separated_tweets_json.txt'
 # max number of tweets that this script downloads.
-max_tweets = 10000
+max_tweets = 10
 
 
 def status_to_map(prefix, status):
@@ -157,11 +158,11 @@ def fetch_tweets(twitter_handle):
 
 
 def main(twitter_handle):
-    credentials_file = 'twitter.credentials.json'
-    with open(credentials_file) as credentials_file_handle:
-        twitter_credentials = json.load(credentials_file_handle)
     global twitter_api
-    twitter_api = twitter.Api(**twitter_credentials)
+    twitter_api = twitter.Api(consumer_key=config.CONSUMER_KEY,
+                              consumer_secret=config.CONSUMER_SECRET,
+                              access_token_key=config.ACCESS_TOKEN,
+                              access_token_secret=config.ACCESS_TOKEN_SECRET)
     try:
         twitter_api.VerifyCredentials()
     except TwitterError as e:

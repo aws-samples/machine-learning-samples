@@ -11,19 +11,18 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, express
 # or implied. See the License for the specific language governing permissions
 # and limitations under the License.
-import boto
 import json
 import os
 from time import sleep
 from zipfile import ZipFile
 
+import boto
+from boto.kinesis.exceptions import ResourceInUseException
+
+import config
+
 # To enable logging:
 # boto.set_stream_logger('boto')
-
-
-def read_file_as_string_then_format(file_name, args):
-    with open(file_name) as file_handle:
-        return file_handle.read().format(**args)
 
 # Initialize the AWS clients.
 sns = boto.connect_sns()
@@ -31,23 +30,15 @@ kinesis = boto.connect_kinesis()
 aws_lambda = boto.connect_awslambda()
 ml = boto.connect_machinelearning()
 
-# Load the config file.
-with open('create-lambda-function.config') as config:
-    config = json.load(config)
+lambda_execution_policy = open('lambdaExecutionPolicyTemplate.json').read().format(**config.AWS)
 
-lambda_execution_policy = read_file_as_string_then_format('lambdaExecutionPolicyTemplate.json', config)
-lambda_invocation_policy = read_file_as_string_then_format('lambdaInvocationPolicyTemplate.json', config)
+aws_account_id = config.AWS["awsAccountId"]
+region = config.AWS["region"]
+kinesis_stream = config.AWS["kinesisStream"]
+sns_topic = config.AWS["snsTopic"]
 
-aws_account_id = config["awsAccountId"]
-
-region = config["region"]
-
-kinesis_stream = config["kinesisStream"]
-sns_topic = config["snsTopic"]
-
-lambda_function_name = config["lambdaFunctionName"]
-lambda_execution_policy_name = config["lambdaExecutionPolicyName"]
-lambda_invocation_policy_name = config["lambdaInvocationPolicyName"]
+lambda_function_name = config.AWS["lambdaFunctionName"]
+lambda_execution_role = config.AWS["lambdaExecutionRole"]
 lambda_trust_policy = '{"Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
 
 
@@ -59,7 +50,7 @@ def role_exists(iam, role_name):
     return True
 
 
-def create_policy(policy_name, assume_role_policy_document, policy_str):
+def create_role(policy_name, assume_role_policy_document, policy_str):
     iam = boto.connect_iam()
     if role_exists(iam, policy_name):
         print('Role "{0}" already exists. Assuming correct values.'.format(policy_name))
@@ -69,26 +60,26 @@ def create_policy(policy_name, assume_role_policy_document, policy_str):
         iam.put_role_policy(policy_name, 'inlinepolicy', policy_str)
 
 
-def create_roles_required_for_lambda():
-    # Create Lambda Execution Policy
-    create_policy(lambda_execution_policy_name, lambda_trust_policy, lambda_execution_policy)
-    # Create Lambda Invocation Policy
-    create_policy(lambda_invocation_policy_name, lambda_trust_policy, lambda_invocation_policy)
+def create_stream(stream):
+    print('Creating Amazon Kinesis Stream: ' + stream)
+    try:
+        kinesis.create_stream(kinesis_stream, 1)
+    except ResourceInUseException, e:
+        print(e.message + ' Continuing.')
 
 
 def main():
-    # Create roles
-    create_roles_required_for_lambda()
-    # Create Kinesis Stream
-    print('Creating Kinesis Stream: ' + kinesis_stream)
-    kinesis.create_stream(kinesis_stream, 1)
-    # Create SNS Topic
-    print('Creating SNS topic: ' + sns_topic)
+    # Create execution role
+    create_role(lambda_execution_role, lambda_trust_policy, lambda_execution_policy)
+    # Create Amazon Kinesis Stream
+    create_stream(kinesis_stream)
+    # Create Amazon SNS Topic
+    print('Creating Amazon SNS topic: ' + sns_topic)
     sns.create_topic(sns_topic)
-    # Create and upload lambda function
+    # Create and upload AWS Lambda function
     create_lambda_function(lambda_function_name)
     # Create realtime endpoint for the ml model
-    ml.create_realtime_endpoint(config['mlModelId'])
+    ml.create_realtime_endpoint(config.AWS['mlModelId'])
     # Wait for kinesis
     pause_until_kinesis_active()
     # Wait for 5 seconds
@@ -97,10 +88,9 @@ def main():
     add_kinesis_as_source_to_lambda()
     print('Kinesis stream is active now. You can start calling it.')
 
-
 def create_lambda_function_zip():
     with open('index.js.template') as lambda_function_template:
-        lf_string = lambda_function_template.read().format(**config)
+        lf_string = lambda_function_template.read().format(**config.AWS)
         with open('index.js', 'w') as lambda_function_file:
             lambda_function_file.write(lf_string)
 
@@ -114,11 +104,10 @@ def create_lambda_function_zip():
 
     return zip_file_name
 
-
 def upload_lambda_function(zip_file_name):
     with open(zip_file_name) as zip_blob:
         lambda_execution_role_arn = 'arn:aws:iam::' + \
-            aws_account_id + ':role/' + lambda_execution_policy_name
+            aws_account_id + ':role/' + lambda_execution_role
         aws_lambda.upload_function(
             lambda_function_name,
             zip_blob.read(),
@@ -148,10 +137,10 @@ def add_kinesis_as_source_to_lambda():
     # Add Kinesis as event source to the lambda function
     print('Adding Kinesis as event source for Lambda function.')
     response_add_event_source = aws_lambda.add_event_source(
-        event_source='arn:aws:kinesis:' + region + ':' +
-        aws_account_id + ':stream/' + kinesis_stream,
+        event_source='arn:aws:kinesis:' + region + ':' + aws_account_id
+                                        + ':stream/' + kinesis_stream,
         function_name=lambda_function_name,
-        role='arn:aws:iam::' + aws_account_id + ':role/' + lambda_invocation_policy_name
+        role='arn:aws:iam::' + aws_account_id + ':role/' + lambda_execution_role
     )
     event_source_id = response_add_event_source['UUID']
 

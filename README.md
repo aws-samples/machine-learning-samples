@@ -1,4 +1,4 @@
-# Machine Learning Samples
+# Amazon Machine Learning Samples
 
 Each subdirectory contains sample code for using Amazon Machine Learning.
 Refer to the `README.md` file in each sub-directory for details on using
@@ -6,7 +6,7 @@ each sample.
 
 ## Targeted Marketing Samples
 
-These samples show how to use the Amazon Machine Learning API for a 
+These samples show how to use the Amazon Machine Learning API for a
 targeted marketing application.  This follows the "banking" dataset example
 described in the Developer Guide.  There are three versions available:
 
@@ -31,7 +31,7 @@ allowing delivery to email, SMS text messages, or other software services.
 
 ## Mobile Prediction Samples
 
-These samples show how to use the Amazon Machine Learning API to make 
+These samples show how to use the Amazon Machine Learning API to make
 real-time predictions from a mobile device.  There are two versions available:
 
 * [Real-time Machine Learning Predictions from iOS](mobile-ios/)
@@ -43,4 +43,3 @@ real-time predictions from a mobile device.  There are two versions available:
 A collection of simple scripts to help with common tasks.
 
 * [Machine Learning Tools (python)](ml-tools-python/)
-
