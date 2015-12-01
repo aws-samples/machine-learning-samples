@@ -38,6 +38,13 @@ real-time predictions from a mobile device.  There are two versions available:
 * [Real-time Machine Learning Predictions from Android](mobile-android/)
 
 
+## K-fold Cross-validation Sample
+
+This sample shows how to use the Amazon Machine Learning API to evaluate ML models using k-fold cross-validation.
+
+* [K-fold Cross-validation Sample (Python)](k-fold-cross-validation/)
+
+
 ## Other tools
 
 A collection of simple scripts to help with common tasks.

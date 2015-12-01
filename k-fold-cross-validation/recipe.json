@@ -1,0 +1,8 @@
+{
+  "outputs": [
+    "ALL_BINARY",
+    "ALL_CATEGORICAL",
+    "quantile_bin(ALL_NUMERIC,50)",
+    "lowercase(ALL_TEXT)"
+  ]
+}
