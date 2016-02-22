@@ -24,7 +24,7 @@ For example:
     python use_model.py ml-12345678901 0.77 s3://your-bucket/prefix
 """
 import base64
-import boto
+import boto3
 import datetime
 import os
 import random
@@ -39,20 +39,20 @@ UNSCORED_DATA_S3_URL = "s3://aml-sample-data/banking-batch.csv"
 def use_model(model_id, threshold, schema_fn, output_s3, data_s3url):
     """Creates all the objects needed to build an ML Model & evaluate its quality.
     """
-    ml = boto.connect_machinelearning()
+    ml = boto3.client('machinelearning') 
 
     poll_until_completed(ml, model_id)  # Can't use it until it's COMPLETED
-    ml.update_ml_model(model_id, score_threshold=threshold)
+    ml.update_ml_model(MLModelId=model_id, ScoreThreshold=threshold)
     print("Set score threshold for %s to %.2f" % (model_id, threshold))
 
     bp_id = 'bp-' + base64.b32encode(os.urandom(10))
     ds_id = create_data_source_for_scoring(ml, data_s3url, schema_fn)
     ml.create_batch_prediction(
-        batch_prediction_id=bp_id,
-        batch_prediction_name="Batch Prediction for marketing sample",
-        ml_model_id=model_id,
-        batch_prediction_data_source_id=ds_id,
-        output_uri=output_s3
+        BatchPredictionId=bp_id,
+        BatchPredictionName="Batch Prediction for marketing sample",
+        MLModelId=model_id,
+        BatchPredictionDataSourceId=ds_id,
+        OutputUri=output_s3
     )
     print("Created Batch Prediction %s" % bp_id)
 
@@ -60,7 +60,7 @@ def use_model(model_id, threshold, schema_fn, output_s3, data_s3url):
 def poll_until_completed(ml, model_id):
     delay = 2
     while True:
-        model = ml.get_ml_model(model_id)
+        model = ml.get_ml_model(MLModelId=model_id)
         status = model['Status']
         message = model.get('Message', '')
         now = str(datetime.datetime.now().time())
@@ -76,13 +76,13 @@ def poll_until_completed(ml, model_id):
 def create_data_source_for_scoring(ml, data_s3url, schema_fn):
     ds_id = 'ds-' + base64.b32encode(os.urandom(10))
     ml.create_data_source_from_s3(
-        ds_id,
-        data_source_name="DS for Batch Prediction %s" % data_s3url,
-        data_spec={
+        DataSourceId=ds_id,
+        DataSourceName="DS for Batch Prediction %s" % data_s3url,
+        DataSpec={
             "DataLocationS3": data_s3url,
             "DataSchema": open(schema_fn).read(),
         },
-        compute_statistics=False
+        ComputeStatistics=False
     )
     print("Created Datasource %s for batch prediction" % ds_id)
     return ds_id
