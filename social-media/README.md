@@ -37,7 +37,7 @@ analyze your customers, it's probably not going to work very well.
 
 ## Step 0: Setting up your environment
 
-You will need python `virualenv` and the `npm` node.js package manager.
+You will need python `virtualenv` and the `npm` node.js package manager.
 On linux machines with `apt-get`, you can install them with the commands:
 
     sudo apt-get update
