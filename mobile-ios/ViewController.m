@@ -44,7 +44,7 @@ AWSMachineLearning *machineLearning;
     getMLModelInput.MLModelId = MLModelId;
     
     // Call Get ML Model
-    [[[machineLearning getMLModel:getMLModelInput] continueWithSuccessBlock:^id(BFTask *task) {
+    [[[machineLearning getMLModel:getMLModelInput] continueWithSuccessBlock:^id(AWSTask *task) {
         AWSMachineLearningGetMLModelOutput *getMLModelOutput = task.result;
         
         if (getMLModelOutput.status != AWSMachineLearningEntityStatusCompleted) {
@@ -60,7 +60,7 @@ AWSMachineLearning *machineLearning;
         // Since model is complete and real-time endpoint is ready, call predict
         return [self predict:MLModelId withRecord: @{}];
 
-    }] continueWithBlock:^id(BFTask *task) {
+    }] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
             NSLog(@"Error %@", task.error);
         }
@@ -75,7 +75,7 @@ AWSMachineLearning *machineLearning;
     }];
 }
 
-- (BFTask *) predict:(NSString *)mlModelId withRecord:(NSDictionary *)record {
+- (AWSTask *) predict:(NSString *)mlModelId withRecord:(NSDictionary *)record {
     AWSMachineLearningPredictInput *predictInput = [AWSMachineLearningPredictInput new];
     predictInput.predictEndpoint = endpoint;
     predictInput.MLModelId = mlModelId;
