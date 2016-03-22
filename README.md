@@ -50,3 +50,8 @@ This sample shows how to use the Amazon Machine Learning API to evaluate ML mode
 A collection of simple scripts to help with common tasks.
 
 * [Machine Learning Tools (python)](ml-tools-python/)
+
+
+## Support
+
+For assistance with using the Amazon Machine Learning Service, or these samples, please see the [AWS Forums](https://forums.aws.amazon.com/forum.jspa?forumID=194&start=0).
