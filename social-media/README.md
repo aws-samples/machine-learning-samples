@@ -58,6 +58,7 @@ on how to get AWS credentials. The AWS user that you choose, needs
 access to a subset of the following policy to run the scripts:
 
     {
+        "Version": "2012-10-17",
         "Statement": [
             {
                 "Effect": "Allow",
@@ -85,7 +86,7 @@ To gather the training data, run the following command:
 Substitute your company's twitter handle instead of @awscloud and
 configure your Twitter API credentials in config.py. Learn how to
 obtain your credentials
-[https://dev.twitter.com/oauth/overview/application-owner-access-tokens](here).
+[here](https://dev.twitter.com/oauth/overview/application-owner-access-tokens).
 
 This will produce a file called `line_separated_tweets_json.txt` that
 other scripts will read later.
