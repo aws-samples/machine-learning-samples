@@ -111,7 +111,7 @@ def upload_lambda_function(zip_file_name):
         aws_lambda.upload_function(
             lambda_function_name,
             zip_blob.read(),
-            "nodejs",
+            "nodejs6.10",
             lambda_execution_role_arn,
             "index.handler",
             "event",

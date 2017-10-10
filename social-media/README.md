@@ -58,6 +58,7 @@ on how to get AWS credentials. The AWS user that you choose, needs
 access to a subset of the following policy to run the scripts:
 
     {
+        "Version": "2012-10-17",
         "Statement": [
             {
                 "Effect": "Allow",
@@ -85,7 +86,7 @@ To gather the training data, run the following command:
 Substitute your company's twitter handle instead of @awscloud and
 configure your Twitter API credentials in config.py. Learn how to
 obtain your credentials
-[https://dev.twitter.com/oauth/overview/application-owner-access-tokens](here).
+[here](https://dev.twitter.com/oauth/overview/application-owner-access-tokens).
 
 This will produce a file called `line_separated_tweets_json.txt` that
 other scripts will read later.
@@ -213,9 +214,9 @@ function, the machine learning realtime endpoint, and the SNS Topic.
 
     python create-lambda-function.py
 
-This script requires that `create-lambda-function.config` is present and contains
+This script requires that `config.py` is present and contains
 appropriate values. Description of the configuration required in
-`create-lambda-function.config` is as follows:
+`config.py` is as follows:
 
 * *awsAccountId* : The AWS Account Id corresponding to the credentials being used
   with boto. See [docs](http://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html)
