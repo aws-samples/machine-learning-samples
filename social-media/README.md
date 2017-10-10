@@ -214,9 +214,9 @@ function, the machine learning realtime endpoint, and the SNS Topic.
 
     python create-lambda-function.py
 
-This script requires that `create-lambda-function.config` is present and contains
+This script requires that `config.py` is present and contains
 appropriate values. Description of the configuration required in
-`create-lambda-function.config` is as follows:
+`config.py` is as follows:
 
 * *awsAccountId* : The AWS Account Id corresponding to the credentials being used
   with boto. See [docs](http://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html)
